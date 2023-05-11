@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcite</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/grafa.css' %}">
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div id="sbros">
+        <a href="{% url 'datapoisk' %}" id="sbros2">СБРОСИТЬ ФИЛЬТР</a>
+    </div>
+
+    <table bgcolor="lightblue" height="50" width="1500" id="tabzag">
+        <tr bgcolor="lightyellow">
+            <th width="200">Название</th>
+            <th width="150">Город вылета</th>
+            <th width="150">Город прилета</th>
+            <th width="100">Дата</th>
+            <th width="120">Перевозчик</th>
+            <th width="500">Краткое описание</th>
+            <th width="50">Кол-во</th>
+            <th>цена</th>
+        </tr>
+    </table>
+    <table bgcolor="lightblue" height="50" width="1500" id="tabmain">
+        {% for bilrow in bileti %}
+        <tr bgcolor="lightyellow">
+            <th width="200">{{ bilrow.name }}</th>
+            <th width="150">{{ bilrow.name_out }}</th>
+            <th width="150">{{ bilrow.name_in }}</th>
+            <th width="100">{{ bilrow.date }}</th>
+            <th width="120">{{ bilrow.description }}</th>
+            <th width="500">{{ bilrow.short_description }}</th>
+            <th width="50">{{ bilrow.quantity }}</th>
+            <th>{{ bilrow.price }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div id="vspliv3">
+            <img src="{% static 'content/oblako2_000000.png' %}" alt="">
+            <a href="{% url 'index' %}" class="nazad">НАЗАД</a>
+            <form action="{% url 'datapoisk' %}" method="post" >
+                 {% csrf_token %}
+                <label id="vspliv_lab_data" for="{{ form.date_2.id_for_label }}">Дата вылета</label>
+                {{ form.date_2 }}
+                <!--<input type="date" id="vspliv_data" name="vspliv_data"  required>-->
+                <button id="b_search2">ПОИСК</button>
+            </form>
+    </div>
+
+    {% else %}
+
+    <div id="nevhod">
+        <p>
+            Давайте сначала познакомимся?
+        </p>
+        <p>
+            Войдите или зарегистрируйтесь!
+        </p>
+    </div>
+
+    {% endif %}
+
+       <div id="box2_2">
+
+        <a href="{% url 'index' %}">
+            <img src="{% static 'content/pngimg.com - plane_PNG101256.png' %}" height="50" width="150" alt="" id="plane">
+        </a>
+        {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <a href="{% url 'users:profile' %}" id="prof_1" title="Профиль">
+                    {{ user.username }}
+                </a>
+                <a href="{% url 'admin:index' %}" id="prof_2" title="Настройка сайта">
+                    Администрирование
+                </a>
+            {% else %}
+                <a href="{% url 'users:profile' %}" id="prof_0" title="Профиль">
+                    {{ user.username }}
+                </a>
+            {% endif %}
+        <a href="{% url 'users:logout' %}" id="exit" title="выход">
+            Выход
+        </a>
+        {% else %}
+        <a href="{% url 'users:registration' %}" id="reg" title="Регистрация на сайте">
+            Регистрация
+        </a>
+        <a href="{% url 'users:authorization' %}" id="aut" title="Вход в профиль">
+            Вход
+        </a>
+        {% endif %}
+
+    </div>
+
+
+
+</body>
+</html>

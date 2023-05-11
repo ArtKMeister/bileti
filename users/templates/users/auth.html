@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authorization</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/grafa.css' %}">
+</head>
+
+<body>
+    <div id="razm">
+        {% if form.errors %}
+            <div id="er_mes_log">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        <div id="vhod">
+            <form action="{% url 'users:authorization' %}" method="post">
+                {% csrf_token %}
+
+                <label id="vhod_mail" for="{{ form.username.id_for_label }}">Логин</label>
+                {{ form.username }}
+                <!--<input type="email" id="mail" name="mail" class="authinputs" required>-->
+                <br>
+                <label id="vhod_pass" for="{{ form.password.id_for_label }}">Пароль</label>
+                {{ form.password }}
+                <!--<input type="password" id="pass" name="pass" class="authinputs" required>-->
+                <br>
+                <button id="b_vhod">ВХОД</button>
+
+            </form>
+            <a href="{% url 'index' %}" id="b_close">НА ГЛАВНУЮ</a>
+            <a href="{% url 'users:registration' %}" id="nereg">Еще не зарегистированны?</a>
+        </div>
+    </div>
+</body>
+</html>

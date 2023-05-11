@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcite</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/grafa.css' %}">
+    
+</head>
+<body>
+    
+    {% if user.is_authenticated %}
+    <div id="profile">
+        <form action="{% url 'users:profile' %}" method="post">
+            {% csrf_token %}
+            <label id="reg_mail" class="lab_reg" for="{{ form.email.id_for_label }}">Почта</label>
+            {{ form.email }}
+            <!--<input type="email" id="r_mail" name="r_mail" required class="inp_reg">-->
+            <br>
+            <label id="reg_name" class="lab_reg" for="{{ form.first_name.id_for_label }}">Имя</label>
+            {{ form.first_name }}
+            <!--<input type="text" id="r_name" name="r_name" required class="inp_reg">-->
+            <br>
+            <label id="reg_sname" class="lab_reg" for="{{ form.last_name.id_for_label }}">Фамилия</label>
+            {{ form.last_name }}
+            <!--<input type="text" id="r_sname" name="r_sname" required class="inp_reg">-->
+            <br>
+            <label id="reg_uname" class="lab_reg" for="{{ form.username.id_for_label }}">Логин</label>
+            {{ form.username }}
+            <!--<input type="text" id="r_uname" name="r_uname" required class="inp_reg">-->
+            <br>
+            <label id="reg_tel" class="lab_reg" for="{{ form.phone.id_for_label }}">Контактный телефон</label>
+            {{ form.phone }}
+            <!--<input type="tel" id="r_tel" name="r_tel" required class="inp_reg">-->
+            <button id="b_izm">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+        </form>
+    </div>
+
+    {% else %}
+
+    <div id="nevhod">
+        <p>
+            Давайте сначала познакомимся?
+        </p>
+        <p>
+            Войдите или зарегистрируйтесь!
+        </p>
+    </div>
+
+    {% endif %}
+
+    <div id="box3">
+
+        <a href="{% url 'index' %}">
+            <img src="{% static 'content/pngimg.com - plane_PNG101256.png' %}" height="50" width="150" alt="" id="plane">
+        </a>
+        {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <a href="{% url 'users:profile' %}" id="prof_1" title="Профиль">
+                    {{ user.username }}
+                </a>
+            {% else %}
+                <a href="{% url 'users:profile' %}" id="prof_0" title="Профиль">
+                    {{ user.username }}
+                </a>
+            {% endif %}
+        <a href="{% url 'users:logout' %}" id="exit" title="выход">
+            Выход
+        </a>
+        {% else %}
+        <a href="{% url 'users:registration' %}" id="reg" title="Регистрация на сайте">
+            Регистрация
+        </a>
+        <a href="{% url 'users:authorization' %}" id="aut" title="Вход в профиль">
+            Вход
+        </a>
+        {% endif %}
+    </div>
+    
+</body>
+</html>

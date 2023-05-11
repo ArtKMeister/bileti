@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/grafa.css' %}">
+</head>
+
+<body>
+    <div id="razm2">
+        {% if form.errors %}
+            <div id="er_mes_reg">
+                {{ form.errors }}
+            </div>
+        {% endif %}
+        <div id="reg2">
+            <form action="{% url 'users:registration' %}" method="post">
+                {% csrf_token %}
+                <label id="reg_mail" class="lab_reg" for="{{ form.email.id_for_label }}">Почта</label>
+                {{ form.email }}
+                <!--<input type="email" id="r_mail" name="r_mail" required class="inp_reg">-->
+                <br>
+                <label id="reg_pass" class="lab_reg" for="{{ form.password1.id_for_label }}">Пароль</label>
+                {{ form.password1 }}
+                <!--<input type="password" id="r_pass" name="r_pass" required class="inp_reg">-->
+                <br>
+                <label id="reg_name" class="lab_reg" for="{{ form.first_name.id_for_label }}">Имя</label>
+                {{ form.first_name }}
+                <!--<input type="text" id="r_name" name="r_name" required class="inp_reg">-->
+                <br>
+                <label id="reg_sname" class="lab_reg" for="{{ form.last_name.id_for_label }}">Фамилия</label>
+                {{ form.last_name }}
+                <!--<input type="text" id="r_sname" name="r_sname" required class="inp_reg">-->
+                <br>
+                <label id="reg_uname" class="lab_reg" for="{{ form.username.id_for_label }}">Придумайте логин</label>
+                {{ form.username }}
+                <!--<input type="text" id="r_uname" name="r_uname" required class="inp_reg">-->
+                <br>
+                <label id="reg_passp" class="lab_reg" for="{{ form.password2.id_for_label }}">Подтвердите пароль</label>
+                {{ form.password2 }}
+                <!--<input type="password" id="r_passp" name="r_passp" required class="inp_reg">-->
+                <br>
+                <label id="reg_tel" class="lab_reg" for="{{ form.phone.id_for_label }}">Контактный телефон</label>
+                {{ form.phone }}
+                <!--<input type="tel" id="r_tel" name="r_tel" required class="inp_reg">-->
+                <button id="b_vhod">РЕГИСТРАЦИЯ</button>
+            </form>
+            <a href="{% url 'index' %}" id="b_close">НА ГЛАВНУЮ</a>
+            <a href="{% url 'users:authorization' %}" id="zareg">Уже есть аккаунт?</a>
+        </div>
+    </div>
+</body>
+</html>
